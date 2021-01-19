@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="cl2">{{errorPosts}} </h1>
-    <div v-show="visible">
+    <div v-show="this.$store.state.visible">
       <button
         type="button"
         class="btn btn-success m-3"
@@ -35,7 +35,6 @@ export default {
       posts: [],
       propsId: null,
       showPostId: null,
-      visible: true
     }
   },
   name: 'post',
@@ -49,7 +48,7 @@ export default {
         .then(response => (this.userName = response.data)) // Получаем страницу выбранного пользователя
         .catch((error) => {
           this.$store.state.errorMessage = error
-          this.visible = false
+          this.$store.state.visible = false
           console.log(this.$store.state.errorMessage)
           return error;
         })

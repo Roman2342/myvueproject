@@ -6,7 +6,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    errorMessage: null
+    errorMessage: null,
+    visible: true
   },
   mutations: {
 
