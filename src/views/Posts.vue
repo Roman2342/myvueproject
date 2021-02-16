@@ -48,7 +48,7 @@ export default {
         .get('https://jsonplaceholder.typicode.com/users/' + this.$route.params.userId)
         .then(response => (this.userName = response.data)) // Получаем страницу выбранного пользователя
         .catch((error) => {
-        return error;
+          this.errorPosts = error
         })
     },
     getPosts() {
@@ -57,7 +57,6 @@ export default {
         .then(response => (this.posts = response.data)) //Получаем посты выбранного пользователя
         .catch((error) => {
           this.errorPosts = error
-          return error;
         })
     },
     backUsers() {

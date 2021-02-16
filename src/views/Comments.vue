@@ -5,7 +5,7 @@
       class="btn btn-danger"
       @click="selectPost(propsId)"
       >{{ btnText(propsId) }}</button>
-      <h1 class="text-danger">{{errorComments}}</h1>
+      <h1 class="text-danger">{{this.errorMessage}}</h1>
       <div class="row pl-3 pt-3">
         <div
           class="col-md-11"
@@ -34,11 +34,6 @@ export default {
       errorMessage: null
     }
   },
-  computed: {
-    errorComments() {
-      return this.errorMessage
-    }
-  },
   methods: {
     selectPost(userPostId) {
       if(this.showPostId === userPostId) {
@@ -53,7 +48,6 @@ export default {
           }) // Получаем комментарии выбранного поста и показываем их в случае равенства showPostId и userPostId
           .catch((error) => {
             this.errorMessage = 'Error loading comments:' + error
-            return error;
           })
 
       }
@@ -70,7 +64,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>

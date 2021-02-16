@@ -46,7 +46,6 @@ export default {
       }) // Получаем список пользователей
       .catch((error) => {
         this.errorUsers = error
-        return error;
       })
     },
     selectUser(userId) {
