@@ -1,10 +1,11 @@
 <template>
-  <div class="conteiner">
+  <div>
     <button
       type="button"
       class="btn btn-danger"
       @click="selectPost(propsId)"
       >{{ btnText(propsId) }}</button>
+      <h1 class="text-danger">{{errorComments}}</h1>
       <div class="row pl-3 pt-3">
         <div
           class="col-md-11"
@@ -15,7 +16,7 @@
             <h5><b>Author:</b> {{ comment.email.toLowerCase() }}</h5>
             <h5><b>Name:</b> {{ comment.name }}</h5>
             <p><b>Text:</b> {{ comment.body }}</p>
-            <hr />
+            <hr/>
         </div>
       </div>
   </div>
@@ -30,11 +31,12 @@ export default {
     return {
       showPostId: null,
       comments: [],
+      errorMessage: null
     }
   },
   computed: {
     errorComments() {
-      return this.$store.state.errorMessage
+      return this.errorMessage
     }
   },
   methods: {
@@ -50,9 +52,7 @@ export default {
             this.showPostId = userPostId
           }) // Получаем комментарии выбранного поста и показываем их в случае равенства showPostId и userPostId
           .catch((error) => {
-            this.$store.state.errorMessage = 'Error loading comments:' + error
-            console.log(this.$store.state.errorMessage)
-            console.log(error)
+            this.errorMessage = 'Error loading comments:' + error
             return error;
           })
 

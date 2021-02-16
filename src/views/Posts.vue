@@ -1,27 +1,28 @@
 <template>
-  <div>
-    <h1 class="cl2">{{errorPosts}} </h1>
-    <div v-show="this.$store.state.visible">
+   <div class="m-3">
       <button
         type="button"
-        class="btn btn-success m-3"
+        class="btn btn-success mb-3"
         @click="backUsers()"
-        >Back</button>
-      <h1 class="ml-3">Post by {{this.userName.name}}</h1>
+      >
+        Back
+      </button>
+
+      <h2>Post by {{this.userName.name}}</h2>
+      <h1 class="text-danger">{{this.errorPosts}}</h1>
+
       <div
         v-for="post in posts"
         :key="post.id"
-        class="post p-3 m-3"
-        >
+        class="border border-2 p-3 mb-3"
+      >
           <h4>Title: {{ post.title }}</h4>
           <p>Text: {{ post.body }}</p>
           <app-comments
             :propsId="post.id"
            ></app-comments> <!-- Передаем id поста в propsId  -->
       </div>
-    </div>
-
-  </div>
+   </div>
 </template>
 
 <script>
@@ -34,7 +35,7 @@ export default {
       userName: [],
       posts: [],
       propsId: null,
-      showPostId: null,
+      errorPosts: null
     }
   },
   name: 'post',
@@ -47,10 +48,7 @@ export default {
         .get('https://jsonplaceholder.typicode.com/users/' + this.$route.params.userId)
         .then(response => (this.userName = response.data)) // Получаем страницу выбранного пользователя
         .catch((error) => {
-          this.$store.state.errorMessage = error
-          this.$store.state.visible = false
-          console.log(this.$store.state.errorMessage)
-          return error;
+        return error;
         })
     },
     getPosts() {
@@ -58,9 +56,7 @@ export default {
         .get('https://jsonplaceholder.typicode.com/posts?userId=' + this.$route.params.userId)
         .then(response => (this.posts = response.data)) //Получаем посты выбранного пользователя
         .catch((error) => {
-          this.$store.state.errorMessage = error
-          this.visible = false
-          console.log(this.$store.state.errorMessage)
+          this.errorPosts = error
           return error;
         })
     },
@@ -70,24 +66,9 @@ export default {
       })
     }
   },
-  computed: {
-    errorPosts() {
-      return this.$store.state.errorMessage
-    }
-  },
   mounted() {
     this.getNameUser();
     this.getPosts();
-
   }
 }
 </script>
-
-<style scoped>
-  .post {
-    border: 1px solid;
-  }
-  .cl2 {
-    color: red;
-  }
-</style>
